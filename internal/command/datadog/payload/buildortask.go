@@ -19,11 +19,12 @@ type BuildOrTask struct {
 		} `json:"user"`
 	}
 	Task struct {
-		ID           *int64   `json:"id"`
-		Name         *string  `json:"name"`
-		Status       *string  `json:"status"`
-		InstanceType *string  `json:"instanceType"`
-		UniqueLabels []string `json:"uniqueLabels"`
+		ID               *int64   `json:"id"`
+		Name             *string  `json:"name"`
+		Status           *string  `json:"status"`
+		InstanceType     *string  `json:"instanceType"`
+		UniqueLabels     []string `json:"uniqueLabels"`
+		ManualRerunCount *int64   `json:"manualRerunCount"`
 	}
 
 	common
@@ -65,5 +66,8 @@ func (buildOrTask BuildOrTask) Enrich(header http.Header, evt *datadogsender.Eve
 	}
 	if value := buildOrTask.Task.UniqueLabels; len(value) > 0 {
 		evt.Tags = append(evt.Tags, fmt.Sprintf("task_unique_labels:%s", strings.Join(value, ",")))
+	}
+	if value := buildOrTask.Task.ManualRerunCount; value != nil {
+		evt.Tags = append(evt.Tags, fmt.Sprintf("manual_rerun_count:%d", *value))
 	}
 }
