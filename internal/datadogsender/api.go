@@ -32,7 +32,7 @@ func NewAPISender(apiKey string, apiSite string) (*APISender, error) {
 	}, nil
 }
 
-func (sender *APISender) SendEvent(ctx context.Context, event *Event) (string, error) {
+func (sender *APISender) SendEvent(ctx context.Context, event *Event) error {
 	ctx = context.WithValue(
 		ctx,
 		datadog.ContextAPIKeys,
@@ -64,8 +64,8 @@ func (sender *APISender) SendEvent(ctx context.Context, event *Event) (string, e
 
 	_, _, err := sender.logsAPI.SubmitLog(ctx, []datadogV2.HTTPLogItem{logItem})
 	if err != nil {
-		return "", fmt.Errorf("%w: %v", ErrAPISenderFailed, err)
+		return fmt.Errorf("%w: %v", ErrAPISenderFailed, err)
 	}
 
-	return "", nil
+	return nil
 }

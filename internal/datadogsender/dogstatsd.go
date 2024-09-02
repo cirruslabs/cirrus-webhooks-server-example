@@ -25,15 +25,15 @@ func NewDogstatsdSender(addr string) (*DogstatsdSender, error) {
 	}, nil
 }
 
-func (sender *DogstatsdSender) SendEvent(ctx context.Context, event *Event) (string, error) {
+func (sender *DogstatsdSender) SendEvent(ctx context.Context, event *Event) error {
 	if err := sender.client.Event(&statsd.Event{
 		Title:     event.Title,
 		Text:      event.Text,
 		Timestamp: event.Timestamp,
 		Tags:      event.Tags,
 	}); err != nil {
-		return "", fmt.Errorf("%w: %v", ErrDogstatsdSenderFailed, err)
+		return fmt.Errorf("%w: %v", ErrDogstatsdSenderFailed, err)
 	}
 
-	return "", nil
+	return nil
 }

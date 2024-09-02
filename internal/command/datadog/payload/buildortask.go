@@ -10,22 +10,25 @@ import (
 
 type BuildOrTask struct {
 	Build struct {
-		ID          *int64  `json:"id"`
-		Status      *string `json:"status"`
-		Branch      *string `json:"branch"`
-		PullRequest *int64  `json:"pullRequest"`
-		User        struct {
+		ID             *int64  `json:"id"`
+		Status         *string `json:"status"`
+		Branch         *string `json:"branch"`
+		PullRequest    *int64  `json:"pullRequest"`
+		ChangeIDInRepo *string `json:"changeIdInRepo"`
+		User           struct {
 			Username *string `json:"username"`
 		} `json:"user"`
-	}
+	} `json:"build"`
 	Task struct {
 		ID               *int64   `json:"id"`
 		Name             *string  `json:"name"`
 		Status           *string  `json:"status"`
+		StatusTimestamp  *int64   `json:"statusTimestamp"`
 		InstanceType     *string  `json:"instanceType"`
 		UniqueLabels     []string `json:"uniqueLabels"`
 		ManualRerunCount *int64   `json:"manualRerunCount"`
-	}
+		LocalGroupID     *int64   `json:"localGroupId"`
+	} `json:"task"`
 
 	common
 }
