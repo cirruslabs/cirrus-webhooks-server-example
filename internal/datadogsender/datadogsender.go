@@ -13,5 +13,5 @@ type Event struct {
 }
 
 type Sender interface {
-	SendEvent(context.Context, *Event) (string, error)
+	SendEvent(context.Context, *Event) error
 }

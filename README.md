@@ -22,7 +22,27 @@ The following command-line arguments are supported:
 * `--http-path` (`string`) — HTTP path on which the webhook events will be expected (defaults to `/`)
 * `--secret-token` (`string`) — if specified, this value will be used as a HMAC SHA-256 secret to verify the webhook events
 
-### Example
+## GetDX processor
+
+This processor receives, enriches and streams Cirrus CI webhook events to DX's Data Cloud API.
+
+### Usage
+
+```
+docker run -it --rm ghcr.io/cirruslabs/cirrus-webhooks-server:latest getdx
+```
+
+The following command-line arguments are supported:
+
+* `--dx-instance` (`string`) — DX instance to use when sending webhook events as DX Pipeline events to the Data Cloud API
+* `--dx-api-key` (`string`) — API key to use when sending webhook events as DX Pipeline events to the Data Cloud API
+* `--http-addr` (`string`) — address on which the HTTP server will listen on (defaults to `:8080`)
+* `--http-path` (`string`) — HTTP path on which the webhook events will be expected (defaults to `/`)
+* `--secret-token` (`string`) — if specified, this value will be used as a HMAC SHA-256 secret to verify the webhook events
+
+## Example
+
+In this example, we'll receive Cirrus CI webhooks events using the Datadog processor.
 
 The simplest way to try this processor is to use Docker and [ngrok](https://ngrok.com/).
 
