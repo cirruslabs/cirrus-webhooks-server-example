@@ -10,12 +10,13 @@ import (
 
 type BuildOrTask struct {
 	Build struct {
-		ID             *int64  `json:"id"`
-		Status         *string `json:"status"`
-		Branch         *string `json:"branch"`
-		PullRequest    *int64  `json:"pullRequest"`
-		ChangeIDInRepo *string `json:"changeIdInRepo"`
-		User           struct {
+		ID               *int64  `json:"id"`
+		Status           *string `json:"status"`
+		Branch           *string `json:"branch"`
+		PullRequest      *int64  `json:"pullRequest"`
+		PullRequestDraft *bool   `json:"pullRequestDraft"`
+		ChangeIDInRepo   *string `json:"changeIdInRepo"`
+		User             struct {
 			Username *string `json:"username"`
 		} `json:"user"`
 	} `json:"build"`
@@ -47,6 +48,9 @@ func (buildOrTask BuildOrTask) Enrich(header http.Header, evt *datadogsender.Eve
 	}
 	if value := buildOrTask.Build.PullRequest; value != nil {
 		evt.Tags = append(evt.Tags, fmt.Sprintf("build_pull_request:%d", *value))
+	}
+	if value := buildOrTask.Build.PullRequestDraft; value != nil {
+		evt.Tags = append(evt.Tags, fmt.Sprintf("build_pull_request_draft:%t", *value))
 	}
 
 	initializerUsername := "api"
